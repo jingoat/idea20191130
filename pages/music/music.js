@@ -1,5 +1,24 @@
 // pages/music/music.js
+const InnerAudioContext = wx.createInnerAudioContext();
 Page({
+  playMusic:function(){
+    InnerAudioContext.src = 'http://music.163.com/song/media/outer/url?id=476592630.mp3';
+    InnerAudioContext.play();
+    InnerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    InnerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
+  pauseMusic: function () {
+    InnerAudioContext.pause();
+    InnerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
 
   /**
    * 页面的初始数据

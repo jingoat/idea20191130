@@ -1,2 +1,3 @@
 <!--pages/music/music.wxml-->
-<text>pages/music/music.wxml</text>
+<button bindtap="playMusic">播放音乐</button>
+<button bindtap="pauseMusic">暂停播放</button>
