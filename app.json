@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/music/music",
+    "pages/video/video",
+    "pages/movie/movie",
+    "pages/home/home",
+    "pages/news/news",
+    "pages/center/center"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#3E8DED",
+    "list": [
+      {
+        "pagePath": "pages/music/music",
+        "text": "音乐",
+        "iconPath": "pages/images/music-selected.png",
+        "selectedIconPath": "pages/images/music-selected.png"
+      },
+      {
+        "pagePath": "pages/movie/movie",
+        "text": "电影",
+        "iconPath": "pages/images/movie-selected.png",
+        "selectedIconPath": "pages/images/movie-selected.png"
+      },
+      {
+        "pagePath": "pages/center/center",
+        "text": "",
+        "iconPath": "pages/images/center-unselected.png",
+        "selectedIconPath": "pages/images/center-selected.png"
+      },
+      {
+        "pagePath": "pages/news/news",
+        "text": "知否",
+        "iconPath": "pages/images/zhifou-selected.png",
+        "selectedIconPath": "pages/images/zhifou-selected.png"
+      },
+      {
+        "pagePath": "pages/home/home",
+        "text": "我的",
+        "iconPath": "pages/images/wo_selected.png",
+        "selectedIconPath": "pages/images/wo_selected.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "requiredBackgroundModes": [
+    "audio",
+    "location"
+  ]
+}
