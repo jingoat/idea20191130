@@ -1,3 +1,4 @@
 <!--pages/music/music.wxml-->
+<button bindtap="getMusicInfo">查找音乐</button>
 <button bindtap="playMusic">播放音乐</button>
 <button bindtap="pauseMusic">暂停播放</button>
