@@ -1,4 +1,5 @@
 <!--pages/music/music.wxml-->
+<input class="weui-input" bindinput="bindKeyInput" placeholder="请输入要查找的音乐"/>
 <button bindtap="getMusicInfo">查找音乐</button>
 <button bindtap="playMusic">播放音乐</button>
 <button bindtap="pauseMusic">暂停播放</button>

@@ -1,1 +1,5 @@
 /* pages/music/music.wxss */
+input{
+  border: 1px solid #000;
+  height: 30px
+  }

@@ -1,20 +1,56 @@
 // pages/music/music.js
-const InnerAudioContext = wx.createInnerAudioContext();
+const backgroundAudioManager = wx.getBackgroundAudioManager();
+backgroundAudioManager.title = '劲音乐';
+let fileName='';
+let vKey='';
+let musicUrl='';
+let inputValue='';
 Page({
-  getMusicInfo:function(){
+  bindKeyInput: function (e) {
+    inputValue=e.detail.value
+  },
+  getMusicInfo: function (){
     const searchUrl ='https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0';
     wx.request({
       url: searchUrl, 
       data: {
         p: 1,
         n: 1,
-        w:'桥边姑娘'
+        w: inputValue
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json', // 默认值
+        'dataType':'jsonp'
       },
       success(res) {
-        console.log(res.data);
+        const jsonRes = JSON.parse(res.data.substr(8).split(')')[0].split('(')[1]);
+        console.info(jsonRes.data.song.list[0].songmid);
+        fileName = 'C400' + jsonRes.data.song.list[0].songmid + '.m4a'
+        wx.request({
+          url: 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json205361747&platform=yqq&cid=205361747&guid=126548448',
+          data: {
+            songmid: jsonRes.data.song.list[0].songmid,
+            filename: fileName
+          },
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            wx.showToast({
+              title: '成功，点击播放',
+              duration: 2000,
+              mask: true,
+              success: function(res) {},
+              fail: function(res) {},
+              complete: function(res) {},
+            })
+            console.log(JSON.stringify(res.data.data.items[0].vkey));
+            vKey = res.data.data.items[0].vkey;
+            musicUrl = 'http://ws.stream.qqmusic.qq.com/' + fileName + '?fromtag=0&guid=126548448&vkey=' + vKey;
+            console.info(musicUrl);
+          }
+        })
+       
       }
     })
   },
@@ -36,19 +72,19 @@ Page({
     })
   },
   playMusic:function(){
-    InnerAudioContext.src = 'http://music.163.com/song/media/outer/url?id=1346496466.mp3';
-    InnerAudioContext.play();
-    InnerAudioContext.onPlay(() => {
+    backgroundAudioManager.src = musicUrl;
+    backgroundAudioManager.play();
+    backgroundAudioManager.onPlay(() => {
       console.log('开始播放')
     })
-    InnerAudioContext.onError((res) => {
+    backgroundAudioManager.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
   },
   pauseMusic: function () {
-    InnerAudioContext.pause();
-    InnerAudioContext.onError((res) => {
+    backgroundAudioManager.pause();
+    backgroundAudioManager.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
@@ -58,7 +94,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    
   },
 
   /**
