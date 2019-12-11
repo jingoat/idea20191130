@@ -1,5 +1,33 @@
 /* pages/music/music.wxss */
-input{
-  border: 1px solid #000;
-  height: 30px
-  }
+.music-container {
+  background: #FAFAFA;
+  text-align: center;
+  padding-top: 10px;
+}
+input {
+  display: block;
+  width: 90%;
+  height: 30px;
+  background: #fff;
+  margin-left: 5%;
+  border-radius:50px; 
+  font-size: 12px;
+}
+.music-list {
+  text-align: left;
+  background: #fff;
+}
+.music-item {
+  background: #fff;
+  padding-left: 15px;
+  border-bottom: 1px solid #F1F1F1;
+  height: 50px
+}
+.music-name {
+  font-size: 13px;
+  margin: 7px 0
+}
+.music-info {
+  font-size: 11px
+}
+

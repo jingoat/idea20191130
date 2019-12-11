@@ -10,12 +10,13 @@ Page({
     inputValue=e.detail.value
   },
   getMusicInfo: function (){
+    const _this=this;
     const searchUrl ='https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0';
     wx.request({
       url: searchUrl, 
       data: {
         p: 1,
-        n: 1,
+        n: 10,
         w: inputValue
       },
       header: {
@@ -23,8 +24,10 @@ Page({
         'dataType':'jsonp'
       },
       success(res) {
-        const jsonRes = JSON.parse(res.data.substr(8).split(')')[0].split('(')[1]);
-        console.info(jsonRes.data.song.list[0].songmid);
+        console.info(res.data);
+        const jsonRes = JSON.parse(res.data.substring(9, res.data.length-1));
+        console.info(jsonRes.data.song.list);
+        _this.setData({ musicList: jsonRes.data.song.list});
         fileName = 'C400' + jsonRes.data.song.list[0].songmid + '.m4a'
         wx.request({
           url: 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json205361747&platform=yqq&cid=205361747&guid=126548448',
@@ -36,14 +39,6 @@ Page({
             'content-type': 'application/json' // 默认值
           },
           success(res) {
-            wx.showToast({
-              title: '成功，点击播放',
-              duration: 2000,
-              mask: true,
-              success: function(res) {},
-              fail: function(res) {},
-              complete: function(res) {},
-            })
             console.log(JSON.stringify(res.data.data.items[0].vkey));
             vKey = res.data.data.items[0].vkey;
             musicUrl = 'http://ws.stream.qqmusic.qq.com/' + fileName + '?fromtag=0&guid=126548448&vkey=' + vKey;
@@ -72,8 +67,15 @@ Page({
     })
   },
   playMusic:function(){
+    console.info(`backgroundAudioManager.paused--${backgroundAudioManager.paused}`);
+    backgroundAudioManager.title = '劲音乐';
     backgroundAudioManager.src = musicUrl;
-    backgroundAudioManager.play();
+    if (!backgroundAudioManager.paused){
+      backgroundAudioManager.pause();
+    }else{
+      backgroundAudioManager.play();
+    }
+    
     backgroundAudioManager.onPlay(() => {
       console.log('开始播放')
     })
@@ -94,7 +96,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    musicList:[]
   },
 
   /**
