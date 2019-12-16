@@ -2,14 +2,18 @@
 <view class="music-container">
   <input class="weui-input" bindinput="bindKeyInput" placeholder="搜索" type='text' confirm-type='搜索'/>
   <button bindtap="getMusicInfo">查找音乐</button>
+  <!-- <scroll-view scroll-y="true" style="height: 900rpx;">
+    
+  </scroll-view> -->
   <view class="music-list">
-    <view class="music-item" wx:for="{{musicList}}" wx:key="{{index}}" bindtap="playMusic">
+    <view class="music-item" wx:for="{{musicList}}" wx:key="{{index}}" bindtap="clickToPlay" data-id="{{item.grp[0]           .songmid||item.songmid}}">
       <view class="music-name">{{item.grp[0].songname||item.songname||'暂无'}}</view>
       <view class="music-info">
         <text>{{item.grp[0].singer[0].name||item.singer[0].name||'暂无'}}</text>
       </view>
     </view>
   </view>
+  
 
   <button bindtap="pauseMusic" wx:if="{{musicList > 0}}">暂停播放</button>
 </view>

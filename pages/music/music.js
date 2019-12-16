@@ -1,9 +1,6 @@
 // pages/music/music.js
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 backgroundAudioManager.title = '劲音乐';
-let fileName='';
-let vKey='';
-let musicUrl='';
 let inputValue='';
 Page({
   bindKeyInput: function (e) {
@@ -24,32 +21,15 @@ Page({
         'dataType':'jsonp'
       },
       success(res) {
-        console.info(res.data);
+        // console.info(res.data);
         const jsonRes = JSON.parse(res.data.substring(9, res.data.length-1));
-        console.info(jsonRes.data.song.list);
-        _this.setData({ musicList: jsonRes.data.song.list});
-        fileName = 'C400' + jsonRes.data.song.list[0].songmid + '.m4a'
-        wx.request({
-          url: 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json205361747&platform=yqq&cid=205361747&guid=126548448',
-          data: {
-            songmid: jsonRes.data.song.list[0].songmid,
-            filename: fileName
-          },
-          header: {
-            'content-type': 'application/json' // 默认值
-          },
-          success(res) {
-            console.log(JSON.stringify(res.data.data.items[0].vkey));
-            vKey = res.data.data.items[0].vkey;
-            musicUrl = 'http://ws.stream.qqmusic.qq.com/' + fileName + '?fromtag=0&guid=126548448&vkey=' + vKey;
-            console.info(musicUrl);
-          }
-        })
-       
+        // console.info(jsonRes.data.song.list);
+        _this.setData({ musicList: jsonRes.data.song.list});  
       }
     })
   },
   getMusicToken: function (songmid) {
+    const _this=this;
     const searchUrl = 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json205361747&platform=yqq&cid=205361747&guid=126548448';
     wx.request({
       url: searchUrl,
@@ -61,12 +41,25 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success(res) {
-        console.log(res.data);
-        const musicUrl = 'http://ws.stream.qqmusic.qq.com/' + filename + '?fromtag=0&guid=126548448&vkey=' + res.data.vkey
+        console.log(`getMusicToken-----${JSON.stringify(res.data)}`);
+        const myVkey = res.data.data.items[0].vkey || res.data.vkey|| undefined;
+        console.log(`myVkey---${myVkey}`);
+        if (myVkey===undefined){
+          wx.showToast({
+            title: '收费歌曲,暂无权限',
+            icon: 'none',
+            duration: 1000
+          });
+          return;
+        }
+        const musicUrl = 'http://ws.stream.qqmusic.qq.com/' + 'C400' + songmid + '.m4a' + '?fromtag=0&guid=126548448&vkey=' + myVkey;
+        console.log(`musicUrl---${musicUrl}`);
+        _this.playMusic(musicUrl);
+
       }
     })
   },
-  playMusic:function(){
+  playMusic: function (musicUrl){
     console.info(`backgroundAudioManager.paused--${backgroundAudioManager.paused}`);
     backgroundAudioManager.title = '劲音乐';
     backgroundAudioManager.src = musicUrl;
@@ -90,6 +83,14 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+  },
+
+  clickToPlay: function (e){
+    console.info('正在加载...');
+    var songmid = e.currentTarget.dataset.id;
+    console.info(`songmid---${songmid}`);
+    const _this=this;
+    _this.getMusicToken(songmid);
   },
 
   /**
