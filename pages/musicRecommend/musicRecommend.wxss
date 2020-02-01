@@ -24,3 +24,24 @@
   font-size: 16px;
   font-weight: 700;
 }
+.music-item-container {
+  width: 100%;
+}
+.music {
+  width:29.3vw;
+  height: 29.3vw;
+  margin: 2vw 2vw 60px;
+  float: left;
+}
+.music image {
+  width: 100%;
+  height: 100%;
+}
+.music-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+.music-writer {
+  font-size: 10px;
+  color: grey
+}

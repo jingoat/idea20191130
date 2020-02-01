@@ -1,10 +1,20 @@
 <!--pages/musicRecommend/musicRecommend.wxml-->
 <view>
   <view class="title-container">
-    <text class="title">热门歌曲</text>
+    <text class="title">最新音乐排行榜top100</text>
     <view class="more-view" bindtap="navigateToSearch">
       <navigator url="/pages/music/music" hover-class="navigator-hover" class="more-text">更多</navigator>
       <image src="../images/angle-right.png" />   
     </view>
   </view>
+
+  <view class="music-item-container">
+    <view class="music" wx:for="{{topMusicList}}"  wx:key="{{index}}" data-id="{{item.data.songmid+'@'+item.data.songname+'@'+item.data.singer[0].name}}" bindtap="clickToPlay">
+      <image src="{{'http://imgcache.qq.com/music/photo/album_300/17/300_albumpic_'+item.data.albumid+'_0.jpg'}}" />
+      <view> <text class="music-title">{{item.data.songname}}</text></view>
+      <view><text class="music-writer">{{item.data.singer[0].name}}</text></view>
+    </view>
+  </view>
+
+  
 </view>
