@@ -1,0 +1,10 @@
+<!--pages/musicRecommend/musicRecommend.wxml-->
+<view>
+  <view class="title-container">
+    <text class="title">热门歌曲</text>
+    <view class="more-view" bindtap="navigateToSearch">
+      <navigator url="/pages/music/music" hover-class="navigator-hover" class="more-text">更多</navigator>
+      <image src="../images/angle-right.png" />   
+    </view>
+  </view>
+</view>

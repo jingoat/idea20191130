@@ -1,0 +1,26 @@
+/* pages/musicRecommend/musicRecommend.wxss */
+.title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px
+}
+.more-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.more-text {
+  font-size: 12px;
+}
+.more-view image {
+  width: 10px;
+  height: 15px;
+  margin-left: 3px;
+}
+.title {
+  font-size: 16px;
+  font-weight: 700;
+}

@@ -1,11 +1,13 @@
 {
   "pages": [
+    "pages/musicRecommend/musicRecommend",
     "pages/music/music",
     "pages/video/video",
     "pages/movie/movie",
     "pages/home/home",
     "pages/news/news",
     "pages/center/center"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,7 +19,7 @@
     "selectedColor": "#3E8DED",
     "list": [
       {
-        "pagePath": "pages/music/music",
+        "pagePath": "pages/musicRecommend/musicRecommend",
         "text": "音乐",
         "iconPath": "pages/images/music-selected.png",
         "selectedIconPath": "pages/images/music-selected.png"
