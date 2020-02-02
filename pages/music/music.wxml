@@ -9,7 +9,7 @@
     
   </scroll-view> -->
   <view class="music-list">
-    <view class="music-item" wx:for="{{musicList}}" wx:key="{{index}}" bindtap="clickToPlay" data-id="{{item.grp[0]           .songmid||item.songmid}}">
+    <view class="music-item" wx:for="{{musicList}}" wx:key="{{index}}" bindtap="clickToPlay" data-id="{{item.grp[0].songmid+'@'+item.grp[0].songname+'@'+item.grp[0].singer[0].name||item.songmid+'@'+item.songname+'@'+item.singer[0].name}}">
       <view class="music-name">{{item.grp[0].songname||item.songname||'暂无'}}</view>
       <view class="music-info">
         <text>{{item.grp[0].singer[0].name||item.singer[0].name||'暂无'}}</text>

@@ -1,6 +1,7 @@
 // pages/music/music.js
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 backgroundAudioManager.title = '劲音乐';
+let currentTarget = null;
 let inputValue='';
 Page({
   bindKeyInput: function (e) {
@@ -28,7 +29,7 @@ Page({
       }
     })
   },
-  getMusicToken: function (songmid) {
+  getMusicToken: function (songmid, epname, singer) {
     const _this=this;
     const searchUrl = 'https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json205361747&platform=yqq&cid=205361747&guid=126548448';
     wx.request({
@@ -54,15 +55,17 @@ Page({
         }
         const musicUrl = 'http://ws.stream.qqmusic.qq.com/' + 'C400' + songmid + '.m4a' + '?fromtag=0&guid=126548448&vkey=' + myVkey;
         console.log(`musicUrl---${musicUrl}`);
-        _this.playMusic(musicUrl);
+        _this.playMusic(musicUrl, epname, singer);
 
       }
     })
   },
-  playMusic: function (musicUrl){
+  playMusic: function (musicUrl, epname, singer){
     console.info(`backgroundAudioManager.paused--${backgroundAudioManager.paused}`);
-    backgroundAudioManager.title = '劲音乐';
     backgroundAudioManager.src = musicUrl;
+    backgroundAudioManager.title = epname;
+    // backgroundAudioManager.epname = epname;
+    backgroundAudioManager.singer = singer;
     if (!backgroundAudioManager.paused){
       backgroundAudioManager.pause();
     }else{
@@ -76,6 +79,9 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+    backgroundAudioManager.onEnded((res) => {
+      _this.clickToPlay(currentTarget);
+    })
   },
   pauseMusic: function () {
     backgroundAudioManager.pause();
@@ -87,10 +93,15 @@ Page({
 
   clickToPlay: function (e){
     console.info('正在加载...');
-    var songmid = e.currentTarget.dataset.id;
+    currentTarget = e;
+    const musicInfo = e.currentTarget.dataset.id;
+    console.info(musicInfo);
+    var songmid = musicInfo.split('@')[0];
+    const epname = musicInfo.split('@')[1];
+    const singer = musicInfo.split('@')[2];
     console.info(`songmid---${songmid}`);
-    const _this=this;
-    _this.getMusicToken(songmid);
+    const _this = this;
+    _this.getMusicToken(songmid, epname, singer);
   },
 
   /**
