@@ -1,7 +1,10 @@
 <!--pages/music/music.wxml-->
 <view class="music-container">
-  <input class="weui-input" bindinput="bindKeyInput" placeholder="搜索" type='text' confirm-type='搜索'/>
-  <button bindtap="getMusicInfo">查找音乐</button>
+  <view class="input-view">
+    <input class="weui-input" bindinput="bindKeyInput" bindconfirm="getMusicInfo" placeholder="搜索" type='text' confirm-type='搜索'/>
+  </view>
+  
+  <!-- <button bindtap="getMusicInfo">查找音乐</button> -->
   <!-- <scroll-view scroll-y="true" style="height: 900rpx;">
     
   </scroll-view> -->

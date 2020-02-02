@@ -30,7 +30,7 @@ Page({
         'dataType': 'jsonp'
       },
       success(res) {
-        console.info(res.data.songlist);
+        // console.info(res.data.songlist);
         _this.setData({ topMusicList: res.data.songlist})
       }
     })

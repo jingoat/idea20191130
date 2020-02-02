@@ -13,7 +13,7 @@ Page({
       url: searchUrl, 
       data: {
         p: 1,
-        n: 10,
+        n: 50,
         w: inputValue
       },
       header: {
@@ -111,7 +111,11 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    wx.getSelectedTextRange({
+      complete: res => {
+        console.log('getSelectedTextRange res', res.start, res.end)
+      }
+    })
   },
 
   /**

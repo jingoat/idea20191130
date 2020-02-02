@@ -7,7 +7,6 @@
     "pages/home/home",
     "pages/news/news",
     "pages/center/center"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,8 +1,21 @@
 /* pages/music/music.wxss */
 .music-container {
-  background: #FAFAFA;
+  background: #fff;
   text-align: center;
   padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+.input-view {
+  height: 50px;
+  background: #FAFAFA;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 input {
   display: block;
@@ -12,10 +25,13 @@ input {
   margin-left: 5%;
   border-radius:50px; 
   font-size: 12px;
+  
+
 }
 .music-list {
   text-align: left;
   background: #fff;
+  margin-top: 50px;
 }
 .music-item {
   background: #fff;
