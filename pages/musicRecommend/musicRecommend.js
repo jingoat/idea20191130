@@ -31,7 +31,7 @@ Page({
         'dataType': 'jsonp'
       },
       success(res) {
-        // console.info(res.data.songlist);
+       console.info(JSON.stringify(res.data.songlist));
         _this.setData({ topMusicList: res.data.songlist})
       }
     })
@@ -52,14 +52,6 @@ Page({
         console.log(`getMusicToken-----${JSON.stringify(res.data)}`);
         const myVkey = res.data.data.items[0].vkey || res.data.vkey || undefined;
         console.log(`myVkey---${myVkey}`);
-        if (myVkey === undefined) {
-          wx.showToast({
-            title: '收费歌曲,暂无权限',
-            icon: 'none',
-            duration: 1000
-          });
-          return;
-        }
         const musicUrl = 'http://ws.stream.qqmusic.qq.com/' + 'C400' + songmid + '.m4a' + '?fromtag=0&guid=126548448&vkey=' + myVkey;
         console.log(`musicUrl---${musicUrl}`);
         _this.playMusic(musicUrl, epname, singer);
@@ -85,7 +77,14 @@ Page({
     })
     backgroundAudioManager.onError((res) => {
       console.log(res.errMsg)
-      console.log(res.errCode)
+      console.log(res.errCode);
+      if (res.errCode===10001){
+        wx.showToast({
+          title: '这首歌暂时无法播放哦',
+          icon: 'none',
+          duration: 1000
+        });
+      }
     })
     backgroundAudioManager.onEnded((res) => {
       _this.clickToPlay(currentTarget);
@@ -100,6 +99,8 @@ Page({
     const epname = musicInfo.split('@')[1];
     const singer = musicInfo.split('@')[2];
     console.info(`songmid---${songmid}`);
+    console.info(`epname---${epname}`);
+    console.info(`singer---${singer}`);
     const _this = this;
     _this.getMusicToken(songmid, epname, singer);
   },
