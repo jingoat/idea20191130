@@ -24,7 +24,7 @@ Page({
       success(res) {
         // console.info(res.data);
         const jsonRes = JSON.parse(res.data.substring(9, res.data.length-1));
-        // console.info(jsonRes.data.song.list);
+        console.info(jsonRes.data.song.list);
         _this.setData({ musicList: jsonRes.data.song.list});  
       }
     })
